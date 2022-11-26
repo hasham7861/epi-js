@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/hasham7861/epi-js/issues"
   },
-  "homepage": "https://github.com/hasham7861/epi-js#readme"
+  "homepage": "https://github.com/hasham7861/epi-js#readme",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "eslint": "^8.28.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
 }
