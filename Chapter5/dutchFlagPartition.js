@@ -60,5 +60,83 @@ function dutchFlagPartition(a, pivotIndex){
 }
 
 let a = [0,1,2,0,2,1,1]
-dutchFlagPartition(a,1)
+// dutchFlagPartition(a,1)
+// console.log(a)
+
+/**
+ * Same problem as the dutchFlagParition but here we try to save some time complexity
+ *  by keeping track of last smallest or last biggest place which can be used to swap places
+ * @param {number []} a 
+ * @param {number} pivotIndex 
+ * @returns void
+ */
+function dutchFlagPartition2(a, pivotIndex){
+
+    if(!a || pivotIndex === 0 || a.length-1 === pivotIndex)
+        return
+
+    console.log('Original list', a)
+    let pivot = a[pivotIndex]
+    let smallest = 0
+    for(let i = 0; i<a.length; i++){
+        if(a[i] < pivot){
+            const temp = a[smallest]
+            a[smallest] = a[i]
+            a[i] = temp
+            smallest++
+        }
+    }
+
+    console.log(`After small numbers are put to the left of the list ${a}`)
+
+    let largest = a.length-1
+    for(let i = a.length-1; i>=0; i--){
+        if(a[i] > pivot){
+            const temp = a[largest]
+            a[largest] = a[i]
+            a[i] = temp
+            largest--
+        }
+    }
+}
+
+// dutchFlagPartition2(a,3)
+
+
+/**
+ * Same problem as the dutchFlagParition2 but we make use of two pointer technique
+ * refer to pg 44 for this example
+ * @param {number []} a 
+ * @param {number} pivotIndex 
+ * @returns void
+ */
+ function dutchFlagPartition3(a, pivotIndex){
+
+    if(!a || pivotIndex === 0 || a.length-1 === pivotIndex)
+        return
+
+    let smaller = 0,
+        equal = 0, // this can be used for both equal and unclassified number (cursor)
+        larger = a.length-1;
+
+    let pivot = a[pivotIndex]
+    while(equal < larger){
+        if(a[equal] < pivot){
+            const temp = a[equal]
+            a[equal] = a[smaller]
+            a[smaller] = temp
+            smaller+=1
+            equal+=smaller+1 // cursor ofc needs to be after smaller
+        } else if (a[equal] == pivot){
+            equal+=1
+        } else { // everything on the top (after pviot) we swap elements to next
+            larger-=1 // we decrement first as we want to swap to next element
+            const temp = a[equal]
+            a[equal] = a[larger]
+            a[larger] = temp
+        }
+    }
+}
+
+dutchFlagPartition3(a,3)
 console.log(a)
